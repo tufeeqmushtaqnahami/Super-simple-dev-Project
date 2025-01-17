@@ -1,9 +1,10 @@
-import { checkcart } from "../data/cart.js";
+import { cart, checkcart } from "../data/cart.js";
 
 import { products } from "../data/products.js";
 
 import { formatCurrnecy } from "./utils/utils.js";
 
+import { removeFromCart } from "../data/cart.js";
 
 let cartSummaryHTML = '';
 
@@ -23,7 +24,7 @@ checkcart.forEach((cart)=>{
 
     })
 
-    console.log(matchingProduct);
+    
 
     cartSummaryHTML += 
 
@@ -51,7 +52,7 @@ checkcart.forEach((cart)=>{
                 <span class="update-quantity-link link-primary">
                 Update
                 </span>
-                <span class="delete-quantity-link link-primary">
+                <span class="delete-quantity-link link-primary js-delete-link " data-product-id="${matchingProduct.id}">
                 Delete
                 </span>
             </div>
@@ -106,10 +107,23 @@ checkcart.forEach((cart)=>{
 
 
     `;
-})
+});
 
 
-console.log(cartSummaryHTML);
 
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
+
+document.querySelectorAll('.js-delete-link').forEach((link) => {
+    link.addEventListener('click', () => {
+        const productId = link.dataset.productId;
+
+        
+        removeFromCart(productId);
+
+       
+        console.log(cart); // For debugging
+        link.closest('.cart-item-container').remove();
+    });
+});
