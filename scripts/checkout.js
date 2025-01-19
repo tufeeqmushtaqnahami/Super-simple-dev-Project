@@ -121,9 +121,6 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
 
         
         removeFromCart(productId);
-
-       
-        console.log(cart); // For debugging
         link.closest('.cart-item-container').remove();
     });
 });
